@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiwiKode - Soluciones de Software a Medida</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Styles & Font Definitions */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1A1A1A; /* Dark Charcoal background */
+        }
+        
+        /* New Custom Tech-Kiwi Colors */
+        .tech-green { color: #3DDC84; }
+        .bg-tech-green { background-color: #3DDC84; }
+        .hover\:bg-tech-green-dark:hover { background-color: #35C074; }
+        .border-tech-green { border-color: #3DDC84; }
+        .shadow-tech-green { box-shadow: 0 0 15px #3DDC84; }
+        
+        .tech-brown { color: #A37E58; } /* New Kiwi Brown Accent */
+
+        .text-light { color: #B0B5BB; } /* Softer, more grayish text */
+        .text-muted { color: #9CA3AF; } /* Slightly darker muted color */
+        .bg-charcoal-dark { background-color: #1A1A1A; }
+        .bg-charcoal-light { background-color: #2C2C2C; }
+        .border-charcoal-light { border-color: #404040; }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Gradient Background Animation */
+        .animated-gradient-bg {
+            background: linear-gradient(-45deg, #1A1A1A, #2C2C2C, #1A1A1A);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Button Glow Effect */
+        .glow-on-hover {
+            box-shadow: 0 0 5px #3DDC84, 0 0 10px #3DDC84;
+        }
+        .glow-on-hover:hover {
+            box-shadow: 0 0 10px #3DDC84, 0 0 25px #3DDC84, 0 0 50px #3DDC84;
+        }
+    </style>
+</head>
+<body class="text-light antialiased">
+
+    <!-- ===== Header ===== -->
+    <header id="header" class="bg-charcoal-dark/80 backdrop-blur-lg fixed w-full top-0 z-50 transition-all duration-300 border-b border-charcoal-light/50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3">
+                 <img src="https://i.ibb.co/4RjvVQmT/Gemini-Generated-Image-kgbrspkgbrspkgbr-1.png" alt="Logo de KiwiKode" class="h-9 w-auto">
+                <span class="font-bold text-2xl text-light flex items-center">Ki<svg class="inline-block h-[0.66em] w-[0.9em] -mb-px mx-px" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 2.5L6 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M11 2.5L16 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M6 13.5L11 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M16 13.5L21 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>iKode</span>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#services" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Servicios</a>
+                <a href="#about" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Nosotros</a>
+                <a href="#portfolio" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Portafolio</a>
+                <a href="#contact" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Contacto</a>
+            </nav>
+            <!-- CTA Button -->
+            <a href="#contact" class="hidden md:inline-block bg-tech-green text-black font-semibold px-6 py-2 rounded-full hover:bg-tech-green-dark transition-all duration-300 transform hover:scale-105">
+                Empezar Proyecto
+            </a>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu" class="h-8 w-8 text-light"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-charcoal-light px-6 pb-4">
+            <a href="#services" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Servicios</a>
+            <a href="#about" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Nosotros</a>
+            <a href="#portfolio" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Portafolio</a>
+            <a href="#contact" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Contacto</a>
+            <a href="#contact" class="block w-full mt-4 bg-tech-green text-black text-center font-semibold px-6 py-3 rounded-full hover:bg-tech-green-dark transition-all duration-300">
+                Empezar Proyecto
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ===== Hero Section ===== -->
+        <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-28 animated-gradient-bg overflow-hidden">
+             <div class="absolute inset-0 bg-grid-gray-800/[0.04] bg-[bottom_1px_center] " style="mask-image: linear-gradient(to bottom, transparent, black, transparent)"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Arquitectura de Software <span class="tech-green">para el Futuro.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-muted">
+                        Construimos sistemas robustos y escalables. Tu visión, potenciada por nuestro código de élite.
+                    </p>
+                    <div class="flex justify-center items-center space-x-4">
+                        <a href="#contact" class="bg-tech-green text-black font-bold px-8 py-4 rounded-full glow-on-hover transition-all duration-300 transform hover:scale-105">
+                            Solicitar Demo
+                        </a>
+                        <a href="#services" class="bg-charcoal-light/50 border border-charcoal-light text-light font-semibold px-8 py-4 rounded-full hover:bg-charcoal-light transition-all duration-300">
+                            Nuestros Servicios
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ===== Services Section ===== -->
+        <section id="services" class="py-20 md:py-28 bg-charcoal-dark">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ingeniería de Software de Alto Impacto</h2>
+                    <p class="text-lg text-muted max-w-2xl mx-auto">Soluciones precisas para desafíos complejos.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="mb-6">
+                            <i data-lucide="server" class="h-10 w-10 tech-green"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">Sistemas Web Escalables</h3>
+                        <p class="text-muted leading-relaxed">
+                           Desarrollamos arquitecturas de microservicios y aplicaciones monolíticas robustas preparadas para un alto tráfico y crecimiento.
+                        </p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
+                         <div class="mb-6">
+                            <i data-lucide="shield-check" class="h-10 w-10 tech-green"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">Desarrollo Móvil Multiplataforma</h3>
+                        <p class="text-muted leading-relaxed">
+                           Creamos aplicaciones nativas y multiplataforma optimizadas para un rendimiento excepcional y una experiencia de usuario fluida.
+                        </p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
+                         <div class="mb-6">
+                            <i data-lucide="brain-circuit" class="h-10 w-10 tech-green"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">Integración de IA y Machine Learning</h3>
+                        <p class="text-muted leading-relaxed">
+                           Potenciamos tus sistemas con modelos de inteligencia artificial para automatizar procesos, analizar datos y obtener insights valiosos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== About Us Section ===== -->
+        <section id="about" class="py-20 md:py-28 bg-charcoal-light">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                    <div class="lg:w-1/2">
+                        <img src="https://placehold.co/600x500/1A1A1A/3DDC84?text=KiwiKode+Team&font=poppins" alt="Equipo de KiwiKode trabajando" class="rounded-2xl shadow-2xl shadow-tech-green/10 w-full h-auto object-cover">
+                    </div>
+                    <div class="lg:w-1/2">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Nuestra Filosofía</h2>
+                        <p class="text-xl italic tech-green mb-6">"Como el kiwi, único en su especie"</p>
+                        <p class="text-lg text-muted mb-4 leading-relaxed">
+                           En KiwiKode, nos inspiramos en nuestro homónimo, el kiwi. Al igual que esta ave única y resiliente que explora meticulosamente su entorno en busca de la perfección, nosotros abordamos cada línea de código con la misma dedicación.
+                        </p>
+                        <p class="text-lg text-muted mb-8 leading-relaxed">
+                           No solo construimos software, creamos ecosistemas digitales robustos, eficientes y perfectamente adaptados a su propósito. Nuestra obsesión es la calidad, la eficiencia y la elegancia en cada solución que entregamos.
+                        </p>
+                        <a href="#contact" class="bg-tech-green text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-tech-green-dark transition-colors duration-300">
+                           Contactar a un experto
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Portfolio Section ===== -->
+        <section id="portfolio" class="py-20 md:py-28 bg-charcoal-dark">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Casos de Éxito</h2>
+                    <p class="text-lg text-muted max-w-2xl mx-auto">Sistemas complejos, resueltos con elegancia.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Portfolio Item 1 -->
+                    <div class="group rounded-2xl overflow-hidden border border-charcoal-light hover:border-tech-green/50 transition-all duration-300 transform hover:-translate-y-2 bg-charcoal-light">
+                        <img src="https://placehold.co/600x400/2C2C2C/FFFFFF?text=FinTech+Platform&font=poppins" alt="Proyecto FinTech" class="w-full h-60 object-cover transition-transform duration-300 group-hover:opacity-80">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-1 text-white">Plataforma de Pagos Global</h3>
+                            <p class="tech-brown font-semibold">FinTech</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2 -->
+                    <div class="group rounded-2xl overflow-hidden border border-charcoal-light hover:border-tech-green/50 transition-all duration-300 transform hover:-translate-y-2 bg-charcoal-light">
+                        <img src="https://placehold.co/600x400/3DDC84/1A1A1A?text=Logistics+AI&font=poppins" alt="App Logística" class="w-full h-60 object-cover transition-transform duration-300 group-hover:opacity-80">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-1 text-white">Optimización de Rutas con IA</h3>
+                            <p class="tech-brown font-semibold">Logística</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA Section ===== -->
+        <section id="contact" class="bg-charcoal-light">
+            <div class="container mx-auto px-6 py-20 md:py-28 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    ¿Listo para construir software robusto?
+                </h2>
+                <p class="text-lg text-muted max-w-2xl mx-auto mb-10">
+                    Nuestro equipo está listo para analizar tu proyecto y proponer una arquitectura de primer nivel.
+                </p>
+                <a href="mailto:hola@kiwikode.dev" class="bg-tech-green text-black font-bold px-10 py-4 rounded-full shadow-2xl shadow-tech-green/20 glow-on-hover transition-all duration-300 transform hover:scale-105">
+                    Agendar una Llamada Técnica
+                </a>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- ===== Footer ===== -->
+    <footer class="bg-charcoal-dark border-t border-charcoal-light">
+        <div class="container mx-auto px-6 py-12 text-center">
+             <a href="#" class="flex items-center justify-center space-x-3 mb-6">
+                 <img src="https://i.ibb.co/4RjvVQmT/Gemini-Generated-Image-kgbrspkgbrspkgbr-1.png" alt="Logo de KiwiKode" class="h-8 w-auto">
+                <span class="font-bold text-xl text-light flex items-center">Ki
+                     <svg class="inline-block h-[0.66em] w-[0.8em] -mb-px mx-px" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 2.5L6 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M11 2.5L16 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M6 13.5L11 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M16 13.5L21 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>
+                iKode</span>
+            </a>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="linkedin" class="h-6 w-6"></i></a>
+                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="github" class="h-6 w-6"></i></a>
+                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="twitter" class="h-6 w-6"></i></a>
+            </div>
+            <div class="text-sm text-gray-500">
+                <p>&copy; 2025 KiwiKode. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+    </script>
+</body>
+</html>
