@@ -1,280 +1,533 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiwiKode - Soluciones de Software a Medida</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Kiwikode - Desarrollo de Software a Medida</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Custom Styles & Font Definitions */
+        /* Estilos personalizados y configuración de Tailwind */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #1A1A1A; /* Dark Charcoal background */
+            font-family: 'Inter', sans-serif;
+            background-color: #030409;
+        }
+        /* Paleta de colores: Dark Navy + Purple/Fuchsia */
+        :root {
+            --bg-primary: #030409; /* Casi negro */
+            --bg-secondary: #0a0c18; /* Azul muy oscuro para tarjetas */
+            --text-primary: #CCD6F6; /* Blanco suave para títulos */
+            --text-secondary: #8892B0; /* Gris-azulado para texto */
+            --accent-purple: #8A2BE2; /* Morado Neón (BlueViolet) */
+            --accent-fuchsia: #D900FF; /* Fuchsia Neón */
+            --accent-gray-faded: rgba(136, 146, 176, 0.4); /* Nuevo color plomo desvanecido */
+            --border-color: #233554;
+            --glow-purple: 0 0 25px rgba(138, 43, 226, 0.7);
+            --glow-fuchsia: 0 0 25px rgba(217, 0, 255, 0.6);
+        }
+        /* Animación de entrada */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        /* New Custom Tech-Kiwi Colors */
-        .tech-green { color: #3DDC84; }
-        .bg-tech-green { background-color: #3DDC84; }
-        .hover\:bg-tech-green-dark:hover { background-color: #35C074; }
-        .border-tech-green { border-color: #3DDC84; }
-        .shadow-tech-green { box-shadow: 0 0 15px #3DDC84; }
-        
-        .tech-brown { color: #A37E58; } /* New Kiwi Brown Accent */
+        /* Estilos Neón */
+        .neon-text-glow {
+            text-shadow: 0 0 8px rgba(204, 214, 246, 0.3);
+        }
+        .neon-accent-glow {
+            color: var(--accent-fuchsia);
+            text-shadow: var(--glow-fuchsia);
+        }
+        .neon-button {
+            box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.5), 0 0 15px rgba(138, 43, 226, 0.4);
+            transition: all 0.3s ease-in-out;
+        }
+        .neon-button:hover {
+            box-shadow: inset 0 0 15px rgba(138, 43, 226, 0.8), 0 0 25px rgba(138, 43, 226, 0.7);
+        }
+        .neon-border {
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .neon-border:hover {
+            border-color: var(--text-secondary);
+        }
 
-        .text-light { color: #B0B5BB; } /* Softer, more grayish text */
-        .text-muted { color: #9CA3AF; } /* Slightly darker muted color */
-        .bg-charcoal-dark { background-color: #1A1A1A; }
-        .bg-charcoal-light { background-color: #2C2C2C; }
-        .border-charcoal-light { border-color: #404040; }
-        
-        /* Smooth scroll behavior */
-        html {
-            scroll-behavior: smooth;
+        /* Estilos del carrusel de proyectos */
+        .project-card .carousel-info {
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        
-        /* Gradient Background Animation */
-        .animated-gradient-bg {
-            background: linear-gradient(-45deg, #1A1A1A, #2C2C2C, #1A1A1A);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        .project-card:hover .carousel-info {
+            opacity: 1;
         }
 
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Estilo para las cajas de texto en "¿Qué Hacemos?" */
+        .blurred-bg-box {
+            position: relative;
+            z-index: 1;
+            border: 1px solid transparent; /* Borde base para la transición */
+            background-color: transparent; /* Fondo completamente transparente */
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-out, border-color 0.3s ease-out;
+        }
+        .blurred-bg-box:hover {
+            transform: translateY(-5px); /* Efecto de elevación */
+            border-color: var(--text-secondary); /* Borde completo al hacer hover */
+        }
+        
+        /* Estilos de bordes degradados */
+        .partial-gradient-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px; /* grosor del borde */
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+            pointer-events: none; /* Evitar que bloquee el cursor */
+            transition: opacity 0.3s ease-in-out; /* Transición para el borde */
+        }
+        
+        .blurred-bg-box:hover::after {
+            opacity: 0; /* Ocultar el borde parcial al hacer hover */
         }
 
-        /* Button Glow Effect */
-        .glow-on-hover {
-            box-shadow: 0 0 5px #3DDC84, 0 0 10px #3DDC84;
+        .border-tr::after {
+            background: linear-gradient(45deg, transparent 60%, var(--accent-gray-faded));
         }
-        .glow-on-hover:hover {
-            box-shadow: 0 0 10px #3DDC84, 0 0 25px #3DDC84, 0 0 50px #3DDC84;
+        .border-bl::after {
+            background: linear-gradient(225deg, transparent 60%, var(--accent-gray-faded));
         }
+
+        /* Estilos Hero */
+        .hero-section {
+            position: relative;
+            background: url('./hero-glass-bg.png') no-repeat center center;
+            background-size: cover;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(3, 4, 9, 0.95) 20%, rgba(3, 4, 9, 0.5) 50%, transparent 80%);
+            z-index: 1;
+        }
+        
     </style>
 </head>
-<body class="text-light antialiased">
+<body class="bg-[--bg-primary] text-[--text-primary] antialiased">
 
-    <!-- ===== Header ===== -->
-    <header id="header" class="bg-charcoal-dark/80 backdrop-blur-lg fixed w-full top-0 z-50 transition-all duration-300 border-b border-charcoal-light/50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="flex items-center space-x-3">
-                 <img src="https://i.ibb.co/4RjvVQmT/Gemini-Generated-Image-kgbrspkgbrspkgbr-1.png" alt="Logo de KiwiKode" class="h-9 w-auto">
-                <span class="font-bold text-2xl text-light flex items-center">Ki<svg class="inline-block h-[0.66em] w-[0.9em] -mb-px mx-px" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 2.5L6 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M11 2.5L16 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M6 13.5L11 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M16 13.5L21 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>iKode</span>
-            </a>
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#services" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Servicios</a>
-                <a href="#about" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Nosotros</a>
-                <a href="#portfolio" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Portafolio</a>
-                <a href="#contact" class="text-lg text-muted hover:text-tech-green transition-colors duration-300">Contacto</a>
-            </nav>
-            <!-- CTA Button -->
-            <a href="#contact" class="hidden md:inline-block bg-tech-green text-black font-semibold px-6 py-2 rounded-full hover:bg-tech-green-dark transition-all duration-300 transform hover:scale-105">
-                Empezar Proyecto
-            </a>
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden">
-                <i data-lucide="menu" class="h-8 w-8 text-light"></i>
-            </button>
+    <!-- Header / Nav -->
+    <nav class="fixed top-0 left-0 right-0 bg-transparent z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <span class="font-bold text-2xl text-white neon-text-glow">Kiwikode</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#solucion" class="text-[--text-secondary] hover:text-[--accent-fuchsia] transition-colors">Soluciones</a>
+                    <a href="#proyectos" class="text-[--text-secondary] hover:text-[--accent-fuchsia] transition-colors">Proyectos</a>
+                    <a href="#contacto" class="text-[--text-secondary] hover:text-[--accent-fuchsia] transition-colors">Contacto</a>
+                </div>
+                <div>
+                     <a href="#contacto" class="hidden md:inline-block bg-transparent text-white font-medium py-2 px-4 rounded-md border border-white/50 hover:border-[--accent-fuchsia] hover:text-[--accent-fuchsia] transition-all">
+                          Solicitar Demo
+                     </a>
+                </div>
+            </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-charcoal-light px-6 pb-4">
-            <a href="#services" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Servicios</a>
-            <a href="#about" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Nosotros</a>
-            <a href="#portfolio" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Portafolio</a>
-            <a href="#contact" class="block py-2 text-center text-lg text-muted hover:text-tech-green transition-colors duration-300">Contacto</a>
-            <a href="#contact" class="block w-full mt-4 bg-tech-green text-black text-center font-semibold px-6 py-3 rounded-full hover:bg-tech-green-dark transition-all duration-300">
-                Empezar Proyecto
-            </a>
+    </nav>
+
+    <!-- Sección Hero -->
+    <header class="hero-section min-h-screen flex items-center justify-start">
+        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:w-1/2">
+                <div class="fade-in-up text-center lg:text-left">
+                    <h1 class="text-5xl md:text-6xl font-black text-white neon-text-glow mb-4">
+                        Creamos el software que impulsa tu visión.
+                    </h1>
+                    <p class="text-lg md:text-xl text-[--text-secondary] max-w-xl mx-auto lg:mx-0 mb-8">
+                        Transformamos ideas complejas en soluciones digitales elegantes, funcionales y a medida. Tu socio tecnológico para la innovación y el crecimiento.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#contacto" class="w-full sm:w-auto bg-[--accent-purple] text-white font-light py-3 px-8 rounded-md neon-button">
+                            Empezar un Proyecto
+                        </a>
+                        <a href="#proyectos" class="w-full sm:w-auto bg-transparent text-white font-light py-3 px-8 rounded-md border border-white/50 hover:bg-white/10 transition-all">
+                            Ver Nuestro Trabajo
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
+    <!-- Contenido Principal -->
     <main>
-        <!-- ===== Hero Section ===== -->
-        <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-28 animated-gradient-bg overflow-hidden">
-             <div class="absolute inset-0 bg-grid-gray-800/[0.04] bg-[bottom_1px_center] " style="mask-image: linear-gradient(to bottom, transparent, black, transparent)"></div>
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <div class="max-w-4xl mx-auto">
-                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
-                        Arquitectura de Software <span class="tech-green">para el Futuro.</span>
-                    </h1>
-                    <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-muted">
-                        Construimos sistemas robustos y escalables. Tu visión, potenciada por nuestro código de élite.
-                    </p>
-                    <div class="flex justify-center items-center space-x-4">
-                        <a href="#contact" class="bg-tech-green text-black font-bold px-8 py-4 rounded-full glow-on-hover transition-all duration-300 transform hover:scale-105">
-                            Solicitar Demo
-                        </a>
-                        <a href="#services" class="bg-charcoal-light/50 border border-charcoal-light text-light font-semibold px-8 py-4 rounded-full hover:bg-charcoal-light transition-all duration-300">
-                            Nuestros Servicios
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
         
-        <!-- ===== Services Section ===== -->
-        <section id="services" class="py-20 md:py-28 bg-charcoal-dark">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ingeniería de Software de Alto Impacto</h2>
-                    <p class="text-lg text-muted max-w-2xl mx-auto">Soluciones precisas para desafíos complejos.</p>
+        <!-- Sección ¿Qué Hacemos? -->
+        <section id="solucion" class="py-24 bg-black relative overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="./medusa.png" alt="Fondo abstracto de cristal" class="w-full h-full object-cover filter opacity-10" onerror="this.onerror=null;this.src='https://placehold.co/1200x800/000000/ffffff?text=Image+Error';">
+            </div>
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl text-white font-black neon-text-glow">Nuestras Capacidades</h2>
+                    <p class="text-lg text-[--text-secondary] mt-2">Creamos soluciones digitales que resuelven problemas reales.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Service Card 1 -->
-                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="mb-6">
-                            <i data-lucide="server" class="h-10 w-10 tech-green"></i>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Columna 1 -->
+                    <div class="flex flex-col gap-8 fade-in-up">
+                        <div class="blurred-bg-box rounded-lg p-6 partial-gradient-border border-tr">
+                            <h3 class="text-2xl font-light text-white neon-text-glow">Diseño UX/UI</h3>
+                            <p class="text-[--text-secondary] mt-2">Interfaces intuitivas y atractivas centradas en la experiencia del usuario.</p>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 text-white">Sistemas Web Escalables</h3>
-                        <p class="text-muted leading-relaxed">
-                           Desarrollamos arquitecturas de microservicios y aplicaciones monolíticas robustas preparadas para un alto tráfico y crecimiento.
-                        </p>
+                        <div class="relative rounded-lg overflow-hidden aspect-video">
+                            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?q=80&w=2070&auto=format&fit=crop" alt="Diseño de interfaz" class="w-full h-full object-cover">
+                            <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white text-xs font-light py-1 px-3 rounded-full border border-white/20 z-10">Frontend</div>
+                        </div>
+                        <div class="blurred-bg-box rounded-lg p-6 partial-gradient-border border-bl">
+                            <h3 class="text-2xl font-light text-white neon-text-glow">Desarrollo Frontend</h3>
+                            <p class="text-[--text-secondary] mt-2">Convertimos diseños en código limpio y responsivo con las últimas tecnologías.</p>
+                        </div>
                     </div>
-                    <!-- Service Card 2 -->
-                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
-                         <div class="mb-6">
-                            <i data-lucide="shield-check" class="h-10 w-10 tech-green"></i>
+                    <!-- Columna 2 -->
+                    <div class="flex flex-col gap-8 fade-in-up lg:translate-y-12">
+                        <div class="relative rounded-lg overflow-hidden aspect-video">
+                            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" alt="Código backend" class="w-full h-full object-cover">
+                            <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white text-xs font-light py-1 px-3 rounded-full border border-white/20 z-10">Backend</div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 text-white">Desarrollo Móvil Multiplataforma</h3>
-                        <p class="text-muted leading-relaxed">
-                           Creamos aplicaciones nativas y multiplataforma optimizadas para un rendimiento excepcional y una experiencia de usuario fluida.
-                        </p>
+                        <div class="blurred-bg-box rounded-lg p-6 partial-gradient-border border-bl">
+                            <h3 class="text-2xl font-light text-white neon-text-glow">Desarrollo Backend</h3>
+                            <p class="text-[--text-secondary] mt-2">Sistemas robustos, seguros y escalables que potencian tu aplicación.</p>
+                        </div>
+                        <div class="relative rounded-lg overflow-hidden aspect-video">
+                            <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2006&auto=format&fit=crop" alt="Bases de datos" class="w-full h-full object-cover">
+                             <div class="absolute top-3 left-3 bg-black/50 backdrop-blur-sm text-white text-xs font-light py-1 px-3 rounded-full border border-white/20 z-10">Databases</div>
+                        </div>
                     </div>
-                    <!-- Service Card 3 -->
-                    <div class="bg-charcoal-light p-8 rounded-2xl border border-charcoal-light hover:border-tech-green transition-all duration-300 transform hover:-translate-y-2">
-                         <div class="mb-6">
-                            <i data-lucide="brain-circuit" class="h-10 w-10 tech-green"></i>
+                    <!-- Columna 3 -->
+                    <div class="fade-in-up lg:col-span-1 h-full">
+                        <div id="combined-card" class="blurred-bg-box rounded-lg p-6 flex flex-col h-full partial-gradient-border border-tr">
+                            <div class="relative z-10 flex flex-col h-full">
+                                <h3 class="text-2xl font-light text-white neon-text-glow">Nuestro Equipo</h3>
+                                <p class="text-[--text-secondary] mt-2 mb-4">Expertos apasionados por la tecnología y la innovación.</p>
+                                <div class="w-full h-px bg-gradient-to-r from-transparent via-[--accent-purple] to-transparent"></div>
+                                
+                                <!-- Contenedor para la parte inferior con fondo sólido -->
+                                <div class="flex-grow flex flex-col justify-between bg-[--bg-secondary] -mx-6 -mb-6 mt-4 rounded-b-lg">
+                                    <!-- Contenedor de perfiles con padding restaurado -->
+                                    <div class="flex-grow flex flex-col justify-around px-6 pt-4">
+                                        <!-- Perfil 1 -->
+                                        <div class="profile-slide">
+                                            <div class="flex items-center gap-4 py-4">
+                                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1780&auto=format&fit=crop" alt="Avatar" class="w-12 h-12 rounded-full object-cover">
+                                                <div class="flex-grow">
+                                                    <h4 class="font-bold text-white">Alex Durden</h4>
+                                                    <p class="text-sm text-[--text-secondary]">Lead Developer</p>
+                                                </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--text-secondary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                            </div>
+                                            <div class="w-full h-px bg-[--border-color]"></div>
+                                            <div class="text-center py-4">
+                                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop" alt="Avatar" class="w-16 h-16 rounded-full object-cover mx-auto">
+                                                <h4 class="font-bold text-white mt-2">Jane Rivera</h4>
+                                                <p class="text-sm text-[--text-secondary]">UX/UI Designer</p>
+                                            </div>
+                                        </div>
+                                        <!-- Perfil 2 (Oculto) -->
+                                        <div class="profile-slide hidden">
+                                             <div class="flex items-center gap-4 py-4">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop" alt="Avatar" class="w-12 h-12 rounded-full object-cover">
+                                                <div class="flex-grow">
+                                                    <h4 class="font-bold text-white">Marco Venti</h4>
+                                                    <p class="text-sm text-[--text-secondary]">Project Manager</p>
+                                                </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--text-secondary]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                            </div>
+                                            <div class="w-full h-px bg-[--border-color]"></div>
+                                            <div class="text-center py-4">
+                                                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop" alt="Avatar" class="w-16 h-16 rounded-full object-cover mx-auto">
+                                                <h4 class="font-bold text-white mt-2">Sofia Chen</h4>
+                                                <p class="text-sm text-[--text-secondary]">Backend Engineer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Contenedor de botones con padding restaurado -->
+                                    <div class="flex justify-center gap-4 pb-6">
+                                        <button onclick="changeProfile('prev')" class="w-8 h-8 flex items-center justify-center rounded-full border border-[--border-color] text-[--text-secondary] hover:border-[--accent-fuchsia] hover:text-[--accent-fuchsia]">&lt;</button>
+                                        <button onclick="changeProfile('next')" class="w-8 h-8 flex items-center justify-center rounded-full border border-[--border-color] text-[--text-secondary] hover:border-[--accent-fuchsia] hover:text-[--accent-fuchsia]">&gt;</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="text-2xl font-bold mb-3 text-white">Integración de IA y Machine Learning</h3>
-                        <p class="text-muted leading-relaxed">
-                           Potenciamos tus sistemas con modelos de inteligencia artificial para automatizar procesos, analizar datos y obtener insights valiosos.
-                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== About Us Section ===== -->
-        <section id="about" class="py-20 md:py-28 bg-charcoal-light">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                    <div class="lg:w-1/2">
-                        <img src="https://placehold.co/600x500/1A1A1A/3DDC84?text=KiwiKode+Team&font=poppins" alt="Equipo de KiwiKode trabajando" class="rounded-2xl shadow-2xl shadow-tech-green/10 w-full h-auto object-cover">
-                    </div>
-                    <div class="lg:w-1/2">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Nuestra Filosofía</h2>
-                        <p class="text-xl italic tech-green mb-6">"Como el kiwi, único en su especie"</p>
-                        <p class="text-lg text-muted mb-4 leading-relaxed">
-                           En KiwiKode, nos inspiramos en nuestro homónimo, el kiwi. Al igual que esta ave única y resiliente que explora meticulosamente su entorno en busca de la perfección, nosotros abordamos cada línea de código con la misma dedicación.
-                        </p>
-                        <p class="text-lg text-muted mb-8 leading-relaxed">
-                           No solo construimos software, creamos ecosistemas digitales robustos, eficientes y perfectamente adaptados a su propósito. Nuestra obsesión es la calidad, la eficiencia y la elegancia en cada solución que entregamos.
-                        </p>
-                        <a href="#contact" class="bg-tech-green text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-tech-green-dark transition-colors duration-300">
-                           Contactar a un experto
-                        </a>
-                    </div>
+        <!-- Sección Proyectos -->
+        <section id="proyectos" class="py-24 bg-black relative overflow-hidden">
+            <!-- Fondo con opacidad -->
+            <div class="absolute inset-0 z-0">
+                <img src="./real.jpg" alt="Fondo de proyectos" class="w-full h-full object-cover filter opacity-60">
+            </div>
+        
+            <!-- Contenido -->
+            <div class="max-w-6xl mx-auto px-4 fade-in-up relative z-10">
+                <h2 class="text-4xl text-white font-bold text-center mb-10 neon-text-glow">Proyectos que nos enorgullecen</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-6">
+                    <!-- Proyectos pequeños -->
+                    <div id="project-1" class="project-card group relative rounded-lg overflow-hidden neon-border lg:col-span-1 lg:row-span-1 h-96"></div>
+                    <div id="project-2" class="project-card group relative rounded-lg overflow-hidden neon-border lg:col-span-1 lg:row-span-1 h-96"></div>
+                    <div id="project-3" class="project-card group relative rounded-lg overflow-hidden neon-border lg:col-span-1 lg:row-span-1 h-96"></div>
+                    <div id="project-4" class="project-card group relative rounded-lg overflow-hidden neon-border lg:col-span-1 lg:row-span-1 h-96"></div>
+                    <!-- Proyecto grande -->
+                    <div id="project-5" class="project-card group relative rounded-lg overflow-hidden neon-border lg:col-start-3 lg:row-start-1 lg:row-span-2"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== Portfolio Section ===== -->
-        <section id="portfolio" class="py-20 md:py-28 bg-charcoal-dark">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Casos de Éxito</h2>
-                    <p class="text-lg text-muted max-w-2xl mx-auto">Sistemas complejos, resueltos con elegancia.</p>
+        <!-- Sección Contacto / CTA Final -->
+        <section id="contacto" class="py-24">
+            <div class="max-w-4xl mx-auto px-4 fade-in-up">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-white mb-4 neon-text-glow">¿Tienes una idea? <br> Hagámosla realidad.</h2>
+                    <p class="text-[--text-secondary] mb-8 max-w-2xl mx-auto">
+                        Estamos listos para escuchar sobre tu próximo gran proyecto. Completa el formulario y nos pondremos en contacto contigo para una consulta sin compromiso.
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Portfolio Item 1 -->
-                    <div class="group rounded-2xl overflow-hidden border border-charcoal-light hover:border-tech-green/50 transition-all duration-300 transform hover:-translate-y-2 bg-charcoal-light">
-                        <img src="https://placehold.co/600x400/2C2C2C/FFFFFF?text=FinTech+Platform&font=poppins" alt="Proyecto FinTech" class="w-full h-60 object-cover transition-transform duration-300 group-hover:opacity-80">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1 text-white">Plataforma de Pagos Global</h3>
-                            <p class="tech-brown font-semibold">FinTech</p>
+                <form action="#" method="POST" class="mt-10 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                    <div>
+                        <label for="first-name" class="block text-sm font-medium text-[--text-secondary]">Nombre</label>
+                        <div class="mt-1">
+                            <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-[--border-color] rounded-md text-white focus:ring-[--accent-fuchsia] focus:border-[--accent-fuchsia]">
                         </div>
                     </div>
-                    <!-- Portfolio Item 2 -->
-                    <div class="group rounded-2xl overflow-hidden border border-charcoal-light hover:border-tech-green/50 transition-all duration-300 transform hover:-translate-y-2 bg-charcoal-light">
-                        <img src="https://placehold.co/600x400/3DDC84/1A1A1A?text=Logistics+AI&font=poppins" alt="App Logística" class="w-full h-60 object-cover transition-transform duration-300 group-hover:opacity-80">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-1 text-white">Optimización de Rutas con IA</h3>
-                            <p class="tech-brown font-semibold">Logística</p>
+                    <div>
+                        <label for="last-name" class="block text-sm font-medium text-[--text-secondary]">Apellido</label>
+                        <div class="mt-1">
+                            <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-[--border-color] rounded-md text-white focus:ring-[--accent-fuchsia] focus:border-[--accent-fuchsia]">
                         </div>
                     </div>
-                </div>
+                    <div class="sm:col-span-2">
+                        <label for="email" class="block text-sm font-medium text-[--text-secondary]">Email</label>
+                        <div class="mt-1">
+                            <input id="email" name="email" type="email" autocomplete="email" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-[--border-color] rounded-md text-white focus:ring-[--accent-fuchsia] focus:border-[--accent-fuchsia]">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="message" class="block text-sm font-medium text-[--text-secondary]">Mensaje</label>
+                        <div class="mt-1">
+                            <textarea id="message" name="message" rows="4" class="py-3 px-4 block w-full shadow-sm bg-[--bg-secondary] border-[--border-color] rounded-md text-white focus:ring-[--accent-fuchsia] focus:border-[--accent-fuchsia]"></textarea>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2 text-center">
+                        <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[--accent-purple] neon-button">
+                            Enviar Mensaje
+                        </button>
+                    </div>
+                </form>
             </div>
         </section>
-
-        <!-- ===== CTA Section ===== -->
-        <section id="contact" class="bg-charcoal-light">
-            <div class="container mx-auto px-6 py-20 md:py-28 text-center">
-                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                    ¿Listo para construir software robusto?
-                </h2>
-                <p class="text-lg text-muted max-w-2xl mx-auto mb-10">
-                    Nuestro equipo está listo para analizar tu proyecto y proponer una arquitectura de primer nivel.
-                </p>
-                <a href="mailto:hola@kiwikode.dev" class="bg-tech-green text-black font-bold px-10 py-4 rounded-full shadow-2xl shadow-tech-green/20 glow-on-hover transition-all duration-300 transform hover:scale-105">
-                    Agendar una Llamada Técnica
-                </a>
-            </div>
-        </section>
-
     </main>
-    
-    <!-- ===== Footer ===== -->
-    <footer class="bg-charcoal-dark border-t border-charcoal-light">
-        <div class="container mx-auto px-6 py-12 text-center">
-             <a href="#" class="flex items-center justify-center space-x-3 mb-6">
-                 <img src="https://i.ibb.co/4RjvVQmT/Gemini-Generated-Image-kgbrspkgbrspkgbr-1.png" alt="Logo de KiwiKode" class="h-8 w-auto">
-                <span class="font-bold text-xl text-light flex items-center">Ki
-                     <svg class="inline-block h-[0.66em] w-[0.8em] -mb-px mx-px" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 2.5L6 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M11 2.5L16 13.5" stroke="#B0B5BB" stroke-width="4" stroke-linecap="round"/><path d="M6 13.5L11 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><path d="M16 13.5L21 2.5" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/></svg>
-                iKode</span>
-            </a>
-            <div class="flex justify-center space-x-6 mb-8">
-                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="linkedin" class="h-6 w-6"></i></a>
-                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="github" class="h-6 w-6"></i></a>
-                <a href="#" class="text-muted hover:text-tech-green"><i data-lucide="twitter" class="h-6 w-6"></i></a>
+
+    <!-- Footer -->
+    <footer class="bg-[--bg-secondary] text-[--text-secondary]">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="col-span-2 md:col-span-1">
+                    <h3 class="text-xl font-bold text-white neon-text-glow">Kiwikode</h3>
+                    <p class="mt-2 text-sm">Transformando ideas en soluciones digitales elegantes y funcionales.</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Navegación</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#solucion" class="text-base hover:text-white">Soluciones</a></li>
+                        <li><a href="#proyectos" class="text-base hover:text-white">Proyectos</a></li>
+                        <li><a href="#contacto" class="text-base hover:text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">Contacto</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="mailto:hola@kiwikode.com" class="text-base hover:text-white">hola@kiwikode.com</a></li>
+                        <li><span class="text-base">+1 (555) 123-4567</span></li>
+                        <li><span class="text-base">Lima, Perú</span></li>
+                    </ul>
+                </div>
             </div>
-            <div class="text-sm text-gray-500">
-                <p>&copy; 2025 KiwiKode. Todos los derechos reservados.</p>
+            <div class="mt-8 border-t border-[--border-color] pt-8 flex items-center justify-between">
+                <p class="text-base">&copy; 2025 Kiwikode. Todos los derechos reservados.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="hover:text-white">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+                    </a>
+                    <a href="#" class="hover:text-white">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
+
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Mobile Menu Toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when a link is clicked
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // Script para animación al hacer scroll
+        const sections = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
             });
+        }, {
+            threshold: 0.1
         });
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Lógica del carrusel de proyectos ---
+        const projectsData = [
+            { 
+                id: 'project-1', 
+                title: 'App Financiera', 
+                description: 'Análisis de datos',
+                subtitle: 'Fintech',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-fuchsia]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>',
+                images: ['https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=1974&auto=format&fit=crop', 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1911&auto=format&fit=crop'] 
+            },
+            { 
+                id: 'project-2', 
+                title: 'Plataforma E-commerce',
+                description: 'Compra personalizada',
+                subtitle: 'Retail',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-fuchsia]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
+                images: ['https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=2072&auto=format&fit=crop', 'https://images.unsplash.com/photo-1585160223233-35f73c648821?q=80&w=1964&auto=format&fit=crop'] 
+            },
+            { 
+                id: 'project-3', 
+                title: 'Herramienta Colaborativa',
+                description: 'Equipos simplificados',
+                subtitle: 'SaaS',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-fuchsia]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
+                images: ['https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=2071&auto=format&fit=crop', 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop'] 
+            },
+            { 
+                id: 'project-4', 
+                title: 'Marketplace NFTs',
+                description: 'Transacciones seguras',
+                subtitle: 'Web3',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-fuchsia]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 6v-1m0-1V4m0 2.01M18 8.01M6 8.01M18 16.01M6 16.01M18 12.01M6 12.01M12 18.01M12 20.01M12 22.01M12 16.01v-1m0-1v-.01" /></svg>',
+                images: ['https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=1932&auto=format&fit=crop', 'https://images.unsplash.com/photo-1642104793539-2b8969542a8b?q=80&w=2070&auto=format&fit=crop'] 
+            },
+            { 
+                id: 'project-5', 
+                title: 'Dashboard Analítico',
+                description: 'Visualización de datos',
+                subtitle: 'Big Data',
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[--accent-fuchsia]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>',
+                images: ['https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop', 'https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=2070&auto=format&fit=crop', 'https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2006&auto=format&fit=crop'] 
+            }
+        ];
+
+        const projectStates = {};
+
+        projectsData.forEach(project => {
+            const container = document.getElementById(project.id);
+            projectStates[project.id] = { currentIndex: 0 };
+            
+            // Crear imágenes
+            project.images.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = project.title;
+                img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
+                container.appendChild(img);
+            });
+
+            // Crear overlay de información
+            const overlay = document.createElement('div');
+            overlay.className = 'carousel-info absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col items-start justify-end text-left p-6';
+            overlay.innerHTML = `
+                <div class="w-12 h-12 mb-4 rounded-full bg-white/10 flex items-center justify-center">${project.icon}</div>
+                <h3 class="text-white font-bold text-xl">${project.title}</h3>
+                <p class="text-white/90 text-sm mt-1">${project.description}</p>
+                <p class="text-[--text-secondary] text-xs mt-2">${project.subtitle}</p>
+            `;
+            container.appendChild(overlay);
+
+            // Crear puntos de navegación
+            const dotsContainer = document.createElement('div');
+            dotsContainer.className = 'carousel-info absolute bottom-4 left-0 right-0 flex justify-center gap-2';
+            project.images.forEach((_, index) => {
+                const dot = document.createElement('span');
+                dot.className = `w-2 h-2 rounded-full cursor-pointer transition-all ${index === 0 ? 'bg-[--accent-fuchsia] scale-125' : 'bg-white/50'}`;
+                dot.onclick = (e) => {
+                    e.stopPropagation(); // Evitar que el click se propague a la tarjeta
+                    goToSlide(project.id, index);
+                };
+                dotsContainer.appendChild(dot);
+            });
+            container.appendChild(dotsContainer);
+        });
+
+        function updateCarouselView(projectId) {
+            const state = projectStates[projectId];
+            const container = document.getElementById(projectId);
+            const images = container.querySelectorAll('img');
+            const dots = container.querySelectorAll('.carousel-info span');
+
+            images.forEach((img, index) => {
+                img.classList.toggle('opacity-100', index === state.currentIndex);
+                img.classList.toggle('opacity-0', index !== state.currentIndex);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-[--accent-fuchsia]', index === state.currentIndex);
+                dot.classList.toggle('scale-125', index === state.currentIndex);
+                dot.classList.toggle('bg-white/50', index !== state.currentIndex);
+            });
+        }
+
+        function goToSlide(projectId, slideIndex) {
+            projectStates[projectId].currentIndex = slideIndex;
+            updateCarouselView(projectId);
+        }
+
+        // Lógica para cambiar perfiles en la tarjeta combinada
+        let currentProfile = 0;
+        const profileSlides = document.querySelectorAll('#combined-card .profile-slide');
+
+        function changeProfile(direction) {
+            profileSlides[currentProfile].classList.add('hidden');
+            if (direction === 'next') {
+                currentProfile = (currentProfile + 1) % profileSlides.length;
+            } else {
+                currentProfile = (currentProfile - 1 + profileSlides.length) % profileSlides.length;
+            }
+            profileSlides[currentProfile].classList.remove('hidden');
+        }
 
     </script>
 </body>
